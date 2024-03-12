@@ -1,0 +1,15 @@
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\bin\Debug\net8.0\Screen Manager SOP 2.exe
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\bin\Debug\net8.0\Screen Manager SOP 2.deps.json
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\bin\Debug\net8.0\Screen Manager SOP 2.runtimeconfig.json
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\bin\Debug\net8.0\Screen Manager SOP 2.dll
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\bin\Debug\net8.0\Screen Manager SOP 2.pdb
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.AssemblyInfoInputs.cache
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.AssemblyInfo.cs
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.csproj.CoreCompileInputs.cache
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.sourcelink.json
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.dll
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\refint\Screen Manager SOP 2.dll
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.pdb
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\Screen Manager SOP 2.genruntimeconfig.cache
+C:\Users\zbc23chco\Documents\GitHub\Screen Manager SOP 2\Screen Manager SOP 2\obj\Debug\net8.0\ref\Screen Manager SOP 2.dll
