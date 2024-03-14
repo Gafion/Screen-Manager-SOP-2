@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Screen_Manager_SOP_2
 {
-    internal class DataHandler
+    internal interface IHasDimensions
     {
+        public Dimensions Dim { get; set; }
     }
 }

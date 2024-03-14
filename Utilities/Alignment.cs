@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Screen_Manager_SOP_2
 {
-    internal class Button
+    public enum Alignment
     {
+        Left = 0,
+        Center = 1,
+        Right = 2,
     }
 }
