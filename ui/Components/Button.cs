@@ -15,8 +15,8 @@ namespace Screen_Manager_SOP_2
             _ = new Box(this.Dim, this.Pos);
 
             Dimensions TextfieldDimensions = new(dim);
-            TextfieldDimensions.Width -= Margins.BorderHorizontalMargin;
-            TextfieldDimensions.Height -= Margins.BorderHorizontalMargin;
+            TextfieldDimensions.Width -= Margins.BorderHorizontalMarginDouble;
+            TextfieldDimensions.Height -= Margins.BorderHorizontalMarginDouble;
             _ = new Textfield(new Position(this.Pos.Left + 1, this.Pos.Top + 1), TextfieldDimensions, label, align);
         }
     }

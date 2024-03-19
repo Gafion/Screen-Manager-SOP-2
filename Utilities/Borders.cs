@@ -23,7 +23,8 @@ namespace Screen_Manager_SOP_2
                 BorderPart.TopMiddle => '┬',
                 BorderPart.BottomMiddle => '┴',
                 BorderPart.Cross => '┼',
-                _ => throw new NotImplementedException()
+                BorderPart.DownArrow => '˅',
+        _ => throw new NotImplementedException()
             };
         }
     }

@@ -12,7 +12,7 @@ namespace Screen_Manager_SOP_2
 
         public UserRepository()
         {
-
+            AddUser("Christian", "Colberg", "kroll94@gmail.com", "60620466", "Hedelyparken 84 st th", "Dev");
         }
 
         public List<User> GetAllUsers()

@@ -1,49 +1,81 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Reflection.Emit;
+using System.Runtime.InteropServices;
+using System.Text;
+using Screen_Manager_SOP_2;
 
-namespace Screen_Manager_SOP_2
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.CursorVisible = false;
-
-            Dimensions MainBoxDim = new(Console.WindowWidth, Console.WindowHeight);
-            Box MainBox = new(
-                    MainBoxDim,
-                    new Position(0, 0));
-
-            _ = new Textfield(
-                    new Position(2, 1),
-                    MainBoxDim,
-                    "CRUDapp",
-                    Alignment.Left,
-                    ConsoleColor.Magenta);
-
-            _ = new Button(
-                    new Position(MainBox.Pos.Left + Console.WindowWidth - Margins.ButtonWidth - Margins.BorderHorizontalMargin, 
-                                 MainBox.Pos.Top + Margins.BorderVerticalMargin),
-                    new Dimensions(14, 3),
-                    "New User",
-                    Alignment.Center);
+Console.OutputEncoding = Encoding.UTF8;
+Console.CursorVisible = false;
+UserRepository userRepository = new();
 
 
-            List<string> titles = ["Dev", "DevOps", "UX", "Support", "CEO"];
-            _ = new ComboBox(
-                    new Position(20, 10),
-                    new Dimensions(22, 3),
-                    titles);
+// -- Main Window Border
+Dimensions mainBoxDim = new(Console.WindowWidth, Console.WindowHeight);
+Position mainBoxPos = new(0, 0);
+Box MainBox = new(
+        dim: mainBoxDim,
+        pos: mainBoxPos);
+// -- Main Window Title
+_ = new Textfield(
+        new Position(2, 1),
+        dim: mainBoxDim,
+        text: "CRUDapp",
+        align: Alignment.Left,
+        FG: ConsoleColor.Magenta);
+// -- Main Window Button for creating new user
+_ = new Button(
+        new Position(
+            MainBox.Pos.Left + Console.WindowWidth - Margins.ButtonWidth - Margins.BorderHorizontalMarginDouble,
+            MainBox.Pos.Top + Margins.BorderVerticalMarginSingle),
+        new Dimensions(
+            Margins.ButtonWidth, Margins.ButtonHeight),
+        label: "New User",
+        align: Alignment.Center);
+// -- Main Table
+Position tablePos = new(
+    mainBoxPos.Left + Margins.BorderHorizontalMarginDouble,
+    mainBoxPos.Top + Margins.TableTopMargin);
+Dimensions tableDim = new(
+    mainBoxDim.Width - Margins.MainBoxBorderMargin,
+    mainBoxDim.Height - Margins.TableBottomMargin);
+List<string> headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Address", "Title", "Delete", "Edit"];
+List<User> users = userRepository.GetAllUsers();
+Dictionary<int, int> columnAdjustments = new() { { 0, 4 }, { 7, 4 }, { 8, 4 } };
+_ = new Table(
+    pos: tablePos,
+    dim: tableDim,
+    headers: headers,
+    users: users,
+    columnAdjustments: columnAdjustments);
 
-            /*_ = new DialogBox(
-                    new Dimensions(
-                        55, 
-                        Math.Min(30, Console.WindowHeight)),
-                    new Position(
-                        (Console.WindowWidth - 55) / 2, 
-                        (Console.WindowHeight - Math.Min(30, Console.WindowHeight)) / 2),
-                    Alignment.Center);*/
+// -- Dialog Window Popup when Main Window Button is pressed
+Dimensions NewUserDialogBoxDim = new(
+            Margins.DialogBoxWidth,
+            Math.Min(Margins.DialogBoxHeight, Console.WindowHeight));
+Position NewUserDialogBoxPos = new(
+            (Console.WindowWidth - Margins.DialogBoxWidth) / 2,
+            (Console.WindowHeight - Math.Min(Margins.DialogBoxHeight, Console.WindowHeight)) / 2);
+_ = new DialogBox(
+        dim: NewUserDialogBoxDim,
+        pos: NewUserDialogBoxPos,
+        align: Alignment.Center,
+        text: "Create New User",
+        labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
+        labelsComboBox: ["Title"],
+        options: ["Dev", "DevOps", "Support", "UX", "CEO"]);
 
-            Console.ReadKey();  
-        }
-    }
-}
+/*Dimensions EditUserDialogBoxDim = new(
+            Margins.DialogBoxWidth,
+            Math.Min(Margins.DialogBoxHeight, Console.WindowHeight));
+Position EditUserDialogBoxPos = new(
+            (Console.WindowWidth - Margins.DialogBoxWidth) / 2,
+            (Console.WindowHeight - Math.Min(Margins.DialogBoxHeight, Console.WindowHeight)) / 2);
+_ = new DialogBox(
+        dim: EditUserDialogBoxDim,
+        pos: EditUserDialogBoxPos,
+        align: Alignment.Center,
+        text: "Edit User",
+        labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
+        labelsComboBox: ["Title"],
+        options: ["Dev", "DevOps", "Support", "UX", "CEO"]);*/
+// --
+Console.ReadKey();  

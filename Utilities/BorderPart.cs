@@ -18,6 +18,7 @@ namespace Screen_Manager_SOP_2
         Right,
         TopMiddle,
         BottomMiddle,
-        Cross
+        Cross,
+        DownArrow
     }
 }
