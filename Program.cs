@@ -7,13 +7,13 @@ Console.OutputEncoding = Encoding.UTF8;
 Console.CursorVisible = false;
 UserRepository userRepository = new();
 
-
 // -- Main Window Border
 Dimensions mainBoxDim = new(Console.WindowWidth, Console.WindowHeight);
 Position mainBoxPos = new(0, 0);
 Box MainBox = new(
         dim: mainBoxDim,
         pos: mainBoxPos);
+
 // -- Main Window Title
 _ = new Textfield(
         new Position(2, 1),
@@ -21,6 +21,7 @@ _ = new Textfield(
         text: "CRUDapp",
         align: Alignment.Left,
         FG: ConsoleColor.Magenta);
+
 // -- Main Window Button for creating new user
 _ = new Button(
         new Position(
@@ -30,6 +31,7 @@ _ = new Button(
             Margins.ButtonWidth, Margins.ButtonHeight),
         label: "New User",
         align: Alignment.Center);
+
 // -- Main Table
 Position tablePos = new(
     mainBoxPos.Left + Margins.BorderHorizontalMarginDouble,
@@ -47,8 +49,8 @@ _ = new Table(
     users: users,
     columnAdjustments: columnAdjustments);
 
-// -- Dialog Window Popup when Main Window Button is pressed
-Dimensions NewUserDialogBoxDim = new(
+// -- Dialog Window Popup
+/*Dimensions NewUserDialogBoxDim = new(
             Margins.DialogBoxWidth,
             Math.Min(Margins.DialogBoxHeight, Console.WindowHeight));
 Position NewUserDialogBoxPos = new(
@@ -61,8 +63,9 @@ _ = new DialogBox(
         text: "Create New User",
         labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
         labelsComboBox: ["Title"],
-        options: ["Dev", "DevOps", "Support", "UX", "CEO"]);
+        options: ["Dev", "DevOps", "Support", "UX", "CEO"]);*/
 
+// -- Edit Window Popup
 /*Dimensions EditUserDialogBoxDim = new(
             Margins.DialogBoxWidth,
             Math.Min(Margins.DialogBoxHeight, Console.WindowHeight));
@@ -77,5 +80,6 @@ _ = new DialogBox(
         labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
         labelsComboBox: ["Title"],
         options: ["Dev", "DevOps", "Support", "UX", "CEO"]);*/
+
 // --
 Console.ReadKey();  
