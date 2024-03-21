@@ -1,9 +1,11 @@
 ﻿namespace Screen_Manager_SOP_2
 {
-    internal class ComboBox : DrawableObject
+    internal class ComboBox : DrawableObject, IHasPosition, IHasDimensions, IFocusable
     {
-
-        public ComboBox(Position pos, Dimensions dim, List<string> options) : base(pos, dim)
+        private bool isFocused = false;
+        public event EventHandler? RequestFocusChange;
+        public ComboBox(Position pos, Dimensions dim, List<string> options) 
+            : base(pos, dim)
         {
             Console.CursorVisible = false;
             int activeIndex = 0;
@@ -17,31 +19,43 @@
                 string text = options[i].PadRight(dim.Width - Margins.BorderHorizontalMarginDouble);
                 if (i == activeIndex)
                 {
-                    _ = new Textfield(new Position(pos.Left + 1, pos.Top + 1 + i),dim, text, Alignment.Left, ConsoleColor.Black, ConsoleColor.White);
+                    _ = new Textfield(new Position(pos.Left + Margins.BorderHorizontalMarginSingle, pos.Top + Margins.BorderVerticalMarginSingle + i),
+                        dim, 
+                        text, 
+                        Alignment.Left, 
+                        ConsoleColor.Black, 
+                        ConsoleColor.White);
                 }
                 else
                 {
-                    _ = new Textfield(new Position(pos.Left + 1, pos.Top + 1 + i), dim, text, Alignment.Left);
+                    _ = new Textfield(new Position(pos.Left + Margins.BorderHorizontalMarginSingle, pos.Top + Margins.BorderVerticalMarginSingle + i), 
+                        dim, 
+                        text, 
+                        Alignment.Left);
                 }
             }
         }
 
         public void Focus()
         {
-            // Code to visually indicate the button is focused, e.g., change color.
+            isFocused = true;
         }
 
         public void Defocus()
         {
-            // Code to revert visual indication of focus.
+            isFocused = false;
         }
 
         public void HandleKeyPress(ConsoleKeyInfo keyInfo)
         {
-            if (keyInfo.Key == ConsoleKey.Enter)
+            if (keyInfo.Key == ConsoleKey.Tab)
             {
-                // Call the method associated with the button.
+                RequestFocusChangeHandler();
             }
+        }
+        private void RequestFocusChangeHandler()
+        {
+            RequestFocusChange?.Invoke(this, EventArgs.Empty);
         }
 
     }

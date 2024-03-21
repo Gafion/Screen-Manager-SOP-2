@@ -7,17 +7,16 @@ namespace Screen_Manager_SOP_2
     internal class CaptureInputField : DrawableObject, IHasDimensions, IHasPosition, IFocusable
     {
         private bool isFocused = false;
+        public event EventHandler? RequestFocusChange;
         private readonly StringBuilder buffer = new();
         public Position FieldPos { get; private set; }
         public Dimensions FieldDim { get; private set; }
         public int? MaxLength { get; set; }
-        private readonly Actions.ButtonAction ButtonAction;
-        public CaptureInputField(Position pos, Dimensions dim, Actions.ButtonAction action, int? maxLength = null) 
+        public CaptureInputField(Position pos, Dimensions dim, int? maxLength = null) 
             : base(pos, dim)
         {
             this.FieldPos = pos;
             this.FieldDim = dim;
-            this.ButtonAction = action;
             this.MaxLength = maxLength;
 
             CaptureInput();
@@ -76,7 +75,14 @@ namespace Screen_Manager_SOP_2
 
         public void HandleKeyPress(ConsoleKeyInfo keyInfo)
         {
-            ButtonAction?.Invoke();
+            if (keyInfo.Key == ConsoleKey.Tab)
+            {
+                RequestFocusChangeHandler();
+            }
+        }
+        private void RequestFocusChangeHandler()
+        {
+            RequestFocusChange?.Invoke(this, EventArgs.Empty);
         }
     }
 }

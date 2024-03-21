@@ -33,7 +33,6 @@
                 CaptureInputField inputField = new(
                     pos: inputFieldPos,
                     dim: FieldDim,
-                    action: RequestFocusChangeHandler,
                     maxLength: FieldDim.Width - Margins.BorderHorizontalMarginSingle);
                 InputFields.Add(inputField);
 

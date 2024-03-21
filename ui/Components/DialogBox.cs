@@ -118,6 +118,11 @@ namespace Screen_Manager_SOP_2
             return focusableElements.AsReadOnly();
         }
 
+        private void InputField_RequestFocusChange(object sender, EventArgs e)
+        {
+            // Logic to move focus to the next focusable element
+        }
+
         void CancelPress()
         {
 
