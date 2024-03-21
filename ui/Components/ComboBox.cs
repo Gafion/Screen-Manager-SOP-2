@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Screen_Manager_SOP_2
+﻿namespace Screen_Manager_SOP_2
 {
     internal class ComboBox : DrawableObject
     {
@@ -30,6 +23,24 @@ namespace Screen_Manager_SOP_2
                 {
                     _ = new Textfield(new Position(pos.Left + 1, pos.Top + 1 + i), dim, text, Alignment.Left);
                 }
+            }
+        }
+
+        public void Focus()
+        {
+            // Code to visually indicate the button is focused, e.g., change color.
+        }
+
+        public void Defocus()
+        {
+            // Code to revert visual indication of focus.
+        }
+
+        public void HandleKeyPress(ConsoleKeyInfo keyInfo)
+        {
+            if (keyInfo.Key == ConsoleKey.Enter)
+            {
+                // Call the method associated with the button.
             }
         }
 

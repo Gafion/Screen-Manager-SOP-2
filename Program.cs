@@ -1,11 +1,10 @@
-﻿using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 using Screen_Manager_SOP_2;
 
 Console.OutputEncoding = Encoding.UTF8;
 Console.CursorVisible = false;
 UserRepository userRepository = new();
+
 
 // -- Main Window Border
 Dimensions mainBoxDim = new(Console.WindowWidth, Console.WindowHeight);
@@ -23,63 +22,95 @@ _ = new Textfield(
         FG: ConsoleColor.Magenta);
 
 // -- Main Window Button for creating new user
-_ = new Button(
+Button newUserButton = new(
         new Position(
             MainBox.Pos.Left + Console.WindowWidth - Margins.ButtonWidth - Margins.BorderHorizontalMarginDouble,
             MainBox.Pos.Top + Margins.BorderVerticalMarginSingle),
         new Dimensions(
             Margins.ButtonWidth, Margins.ButtonHeight),
         label: "New User",
+        action: NewUser,
         align: Alignment.Center);
 
 // -- Main Table
 Position tablePos = new(
-    mainBoxPos.Left + Margins.BorderHorizontalMarginDouble,
-    mainBoxPos.Top + Margins.TableTopMargin);
+        mainBoxPos.Left + Margins.BorderHorizontalMarginDouble,
+        mainBoxPos.Top + Margins.TableTopMargin);
 Dimensions tableDim = new(
-    mainBoxDim.Width - Margins.MainBoxBorderMargin,
-    mainBoxDim.Height - Margins.TableBottomMargin);
+        mainBoxDim.Width - Margins.MainBoxBorderMargin,
+        mainBoxDim.Height - Margins.TableBottomMargin);
 List<string> headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Address", "Title", "Delete", "Edit"];
 List<User> users = userRepository.GetAllUsers();
 Dictionary<int, int> columnAdjustments = new() { { 0, 4 }, { 7, 4 }, { 8, 4 } };
-_ = new Table(
-    pos: tablePos,
-    dim: tableDim,
-    headers: headers,
-    users: users,
-    columnAdjustments: columnAdjustments);
+Table table = new(
+        pos: tablePos,
+        dim: tableDim,
+        headers: headers,
+        users: users,
+        columnAdjustments: columnAdjustments);
 
-// -- Dialog Window Popup
-/*Dimensions NewUserDialogBoxDim = new(
+// -- New User Window Popup
+static void NewUser()
+{
+    Dimensions newUserDialogBoxDim = new(
             Margins.DialogBoxWidth,
             Math.Min(Margins.DialogBoxHeight, Console.WindowHeight));
-Position NewUserDialogBoxPos = new(
-            (Console.WindowWidth - Margins.DialogBoxWidth) / 2,
-            (Console.WindowHeight - Math.Min(Margins.DialogBoxHeight, Console.WindowHeight)) / 2);
-_ = new DialogBox(
-        dim: NewUserDialogBoxDim,
-        pos: NewUserDialogBoxPos,
-        align: Alignment.Center,
-        text: "Create New User",
-        labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
-        labelsComboBox: ["Title"],
-        options: ["Dev", "DevOps", "Support", "UX", "CEO"]);*/
+    Position newUserDialogBoxPos = new(
+                (Console.WindowWidth - Margins.DialogBoxWidth) / 2,
+                (Console.WindowHeight - Math.Min(Margins.DialogBoxHeight, Console.WindowHeight)) / 2);
+    DialogBox newUserWindow = new(
+            dim: newUserDialogBoxDim,
+            pos: newUserDialogBoxPos,
+            align: Alignment.Center,
+            text: "Create New User",
+            labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
+            labelsComboBox: ["Title"],
+            options: ["Dev", "DevOps", "Support", "UX", "CEO"]);
+
+    var focusableElements = newUserWindow.GetFocusableElements();
+    FocusManager DialogManager = new(focusableElements);
+
+    while (true)
+    {
+        var keyInfo = Console.ReadKey(true);
+        DialogManager.HandleKeyPress(keyInfo);
+    }
+}
+
+List<IFocusable> focusables = [newUserButton, table];
+FocusManager focusManager = new(focusables);
+// --
+while (true)
+{
+    var keyinfo = Console.ReadKey(true);
+    if (keyinfo.Key == ConsoleKey.Tab)
+    {
+        focusManager.MoveFocus(keyinfo.Key);
+    }
+    else if (keyinfo.Key == ConsoleKey.Enter)
+    {
+        focusManager.HandleKeyPress(keyinfo);
+    }
+}
+
+
+
 
 // -- Edit Window Popup
-/*Dimensions EditUserDialogBoxDim = new(
+/*static void EditUser()
+{
+    Dimensions EditUserDialogBoxDim = new(
             Margins.DialogBoxWidth,
             Math.Min(Margins.DialogBoxHeight, Console.WindowHeight));
-Position EditUserDialogBoxPos = new(
-            (Console.WindowWidth - Margins.DialogBoxWidth) / 2,
-            (Console.WindowHeight - Math.Min(Margins.DialogBoxHeight, Console.WindowHeight)) / 2);
-_ = new DialogBox(
-        dim: EditUserDialogBoxDim,
-        pos: EditUserDialogBoxPos,
-        align: Alignment.Center,
-        text: "Edit User",
-        labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
-        labelsComboBox: ["Title"],
-        options: ["Dev", "DevOps", "Support", "UX", "CEO"]);*/
-
-// --
-Console.ReadKey();  
+    Position EditUserDialogBoxPos = new(
+                (Console.WindowWidth - Margins.DialogBoxWidth) / 2,
+                (Console.WindowHeight - Math.Min(Margins.DialogBoxHeight, Console.WindowHeight)) / 2);
+    _ = new DialogBox(
+            dim: EditUserDialogBoxDim,
+            pos: EditUserDialogBoxPos,
+            align: Alignment.Center,
+            text: "Edit User",
+            labelsInput: ["First Name", "Last Name", "Email", "Phone", "Address"],
+            labelsComboBox: ["Title"],
+            options: ["Dev", "DevOps", "Support", "UX", "CEO"]);
+}*/

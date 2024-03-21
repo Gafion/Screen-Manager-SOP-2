@@ -1,27 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Screen_Manager_SOP_2.ui.Components
+﻿namespace Screen_Manager_SOP_2
 {
     internal class ComboBoxGroup : DrawableObject
     {
-        private Position StartPos { get; set; }
-        private Dimensions FieldDim { get; set; }
         private int VerticalSpacing { get; set; }
         private List<ComboBox> ComboBoxes { get; set; }
-        private List<string> Labels { get; set; }
-        private Position NextStartPos { get; set; }
+        private Position? NextStartPos { get; set; }
 
         public ComboBoxGroup(Position pos, Dimensions dim, List<string> labels, List<string> options, int spacing) : base(pos, dim)
         {
-            this.StartPos = pos;
-            this.FieldDim = dim;
             this.VerticalSpacing = spacing;
             this.ComboBoxes = [];
-            this.Labels = labels;
 
             CreateComboBoxes(labels, options);
         }
@@ -54,9 +42,11 @@ namespace Screen_Manager_SOP_2.ui.Components
             }
             NextStartPos = currentPos;
         }
-        public Position GetNextStartPosition()
+        public Position GetNextStartPosition() => NextStartPos!;
+
+        public IEnumerable<IFocusable> GetComboBoxes()
         {
-            return NextStartPos;
+            return ComboBoxes.Cast<IFocusable>();
         }
     }
 }

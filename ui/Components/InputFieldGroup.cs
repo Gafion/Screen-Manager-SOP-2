@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Screen_Manager_SOP_2
+﻿namespace Screen_Manager_SOP_2
 {
     internal class InputFieldGroup : DrawableObject
     {
@@ -12,9 +6,9 @@ namespace Screen_Manager_SOP_2
         private Dimensions FieldDim { get; set; }
         private int VerticalSpacing { get; set; }
         private List<CaptureInputField> InputFields { get; set; }
-        private Position NextStartPos { get; set; }
+        private Position? NextStartPos { get; set; }
 
-        public InputFieldGroup(Position pos, Dimensions dim, int spacing, List<string>? labels = null) : base(pos, dim)
+        public InputFieldGroup(Position pos, Dimensions dim, int spacing, List<string> labels) : base(pos, dim)
         {
             this.StartPos = pos;
             this.FieldDim = dim;
@@ -22,7 +16,6 @@ namespace Screen_Manager_SOP_2
             this.InputFields = [];
 
             CreateFields(labels);
-            CaptureAllInputs();
         }
         public void CreateFields(List<string> labels)
         {
@@ -40,6 +33,7 @@ namespace Screen_Manager_SOP_2
                 CaptureInputField inputField = new(
                     pos: inputFieldPos,
                     dim: FieldDim,
+                    action: RequestFocusChangeHandler,
                     maxLength: FieldDim.Width - Margins.BorderHorizontalMarginSingle);
                 InputFields.Add(inputField);
 
@@ -50,10 +44,7 @@ namespace Screen_Manager_SOP_2
             NextStartPos = currentPos;
         }
 
-        public Position GetNextStartPosition()
-        {
-            return NextStartPos;
-        }
+        public Position GetNextStartPosition() => NextStartPos!;
 
         public void CaptureAllInputs()
         {
@@ -71,6 +62,11 @@ namespace Screen_Manager_SOP_2
                 inputs.Add(inputField.GetInput());
             }
             return inputs;
+        }
+
+        public IEnumerable<IFocusable> GetInputFields()
+        {
+            return InputFields.Cast<IFocusable>();
         }
     }
 }

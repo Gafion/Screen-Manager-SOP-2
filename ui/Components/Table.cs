@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Screen_Manager_SOP_2
+﻿namespace Screen_Manager_SOP_2
 {
-    internal class Table : DrawableObject
+    internal class Table : DrawableObject, IHasPosition, IHasDimensions, IFocusable
     {
+        private bool isFocused = false;
         private List<string> Headers { get; set; }
         private List<List<string>> Rows { get; set; }
         private List<int> ColumnWidths { get; set; }
@@ -142,14 +136,16 @@ namespace Screen_Manager_SOP_2
 
         private void DrawCell(List<string> row, int colIndex, int cellLeftPosition, int rowTopPosition)
         {
+            ConsoleColor fgColor = isFocused ? ConsoleColor.Red : ConsoleColor.Gray;
+
             string cellContent = GetCellContent(row, colIndex).PadRight(ColumnWidths[colIndex]);
             Position cellContentPos = new(
-                cellLeftPosition + 1, 
+                cellLeftPosition + Margins.BorderHorizontalMarginSingle, 
                 rowTopPosition);
             Position cellBorderPos = new(
                 cellLeftPosition, 
                 rowTopPosition);
-            InsertAt(cellContentPos, cellContent, ConsoleColor.Gray);
+            InsertAt(cellContentPos, cellContent, fgColor);
             InsertAt(cellBorderPos, Borders.Get(BorderPart.Vertical).ToString());
         }
 
@@ -168,6 +164,26 @@ namespace Screen_Manager_SOP_2
                 Borders.Get(BorderPart.BottomLeft) + string.Join(Borders.Get(BorderPart.BottomMiddle), 
                 ColumnWidths.Select(w => new string(Borders.Get(BorderPart.Horizontal), w))) + Borders.Get(BorderPart.BottomRight);
             InsertAt(bottomBorderPos, bottomBorder);
+        }
+
+        public void Focus()
+        {
+            isFocused = true;
+            DrawRows();
+        }
+
+        public void Defocus()
+        {
+            isFocused = false;
+            DrawRows();
+        }
+
+        public void HandleKeyPress(ConsoleKeyInfo keyInfo)
+        {
+            if (keyInfo.Key == ConsoleKey.Enter)
+            {
+                // Call the method associated with the button.
+            }
         }
     }
 }

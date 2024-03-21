@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Screen_Manager_SOP_2
+﻿namespace Screen_Manager_SOP_2
 {
     internal class Box : DrawableObject
     {
         private readonly int RightWindowMargin = 2;
         private readonly int MarginRight = 1;
-        public Box(Dimensions dim, Position? pos = null,ConsoleColor color = ConsoleColor.White) 
-            : base(pos, dim)
+        public Box(Dimensions dim, Position? pos = null, ConsoleColor color = ConsoleColor.White)
+            : base(pos ?? Position.Empty, dim)
         {
             ClearArea(this.Pos, dim);
             InsertAt(
@@ -23,7 +15,7 @@ namespace Screen_Manager_SOP_2
                     $"{Borders.Get(BorderPart.TopRight)}", 
                 color);
             
-            Position newPosition = new(pos);
+            Position newPosition = new(this.Pos);
             for (int i = 1; i < dim.Height - MarginRight; i++)
             {
                 newPosition.Top = this.Pos.Top + i;

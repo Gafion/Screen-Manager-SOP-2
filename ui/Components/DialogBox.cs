@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Screen_Manager_SOP_2.ui.Components;
+﻿using System.Collections.ObjectModel;
 
 namespace Screen_Manager_SOP_2
 {
-    internal class DialogBox : Box
+    internal class DialogBox : Box, IHasDimensions, IHasPosition
     {
+        private readonly List<IFocusable> focusableElements = [];
         public DialogBox(Dimensions dim, Position pos, Alignment? align, string text, List<string> labelsInput, List<string> labelsComboBox, List<string> options) 
             : base(dim, pos)
         {
@@ -26,6 +21,7 @@ namespace Screen_Manager_SOP_2
             textFieldDimensions.Width -= Margins.BorderHorizontalMarginDouble;
             textFieldDimensions.Height -= Margins.BorderHorizontalMarginDouble;
             _ = new Textfield(
+
                     pos: textFieldPosition, 
                     dim: textFieldDimensions, 
                     text: text, 
@@ -59,10 +55,11 @@ namespace Screen_Manager_SOP_2
                 nextStartPosLabelFields.Top);
             Dimensions cancelButtonDim = new(
                 Margins.ButtonWidth, Margins.ButtonHeight);
-            _ = new Button(
+            Button cancelButton = new(
                 pos: cancelButtonPos,
                 dim: cancelButtonDim,
                 label: "Cancel",
+                action: CancelPress,
                 align: Alignment.Center);
 
             Position acceptButtonPos = new(
@@ -70,11 +67,14 @@ namespace Screen_Manager_SOP_2
                 nextStartPosLabelFields.Top);
             Dimensions acceptButtonDim = new(
                 Margins.ButtonWidth, Margins.ButtonHeight);
-            _ = new Button(
+            Button acceptButton = new(
                 pos: acceptButtonPos,
                 dim: acceptButtonDim,
-                label: "Create",
+                label: "Accept",
+                action: AcceptPress,
                 align: Alignment.Center);
+            focusableElements.Add(cancelButton);
+            focusableElements.Add(acceptButton);
 
             // -- Input Field Group
             Position inputGroupStartPos = new(
@@ -89,6 +89,7 @@ namespace Screen_Manager_SOP_2
                 spacing: Margins.BorderVerticalMarginDouble,
                 labels: labelsInput);
             Position nextStartPosInputFields = inputFields.GetNextStartPosition();
+            focusableElements.AddRange(inputFields.GetInputFields());
 
             // -- ComboBox Group
             Position comboBoxPos = new(
@@ -104,8 +105,27 @@ namespace Screen_Manager_SOP_2
                 options: options,
                 spacing: Margins.BorderVerticalMarginDouble);
             Position nextStartPosComboBoxes = comboBoxes.GetNextStartPosition();
+            focusableElements.AddRange(comboBoxes.GetComboBoxes());
+        }
 
-            
+        public void AddFocusableElement(IFocusable element)
+        {
+            focusableElements.Add(element);
+        }
+
+        public ReadOnlyCollection<IFocusable> GetFocusableElements()
+        {
+            return focusableElements.AsReadOnly();
+        }
+
+        void CancelPress()
+        {
+
+        }
+
+        void AcceptPress()
+        {
+
         }
     }
 }

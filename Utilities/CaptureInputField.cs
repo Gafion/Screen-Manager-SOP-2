@@ -1,20 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Reflection.Emit;
 using System.Text;
-using System.Threading.Tasks;
+using static Screen_Manager_SOP_2.Actions;
 
 namespace Screen_Manager_SOP_2
 {
-    internal class CaptureInputField(Position pos, Dimensions dim, int? maxLength = null) : DrawableObject(pos, dim)
+    internal class CaptureInputField : DrawableObject, IHasDimensions, IHasPosition, IFocusable
     {
+        private bool isFocused = false;
         private readonly StringBuilder buffer = new();
-        public Position FieldPos { get; private set; } = pos;
-        public Dimensions FieldDim { get; private set; } = dim;
-        public int? MaxLength { get; set; } = maxLength;
+        public Position FieldPos { get; private set; }
+        public Dimensions FieldDim { get; private set; }
+        public int? MaxLength { get; set; }
+        private readonly Actions.ButtonAction ButtonAction;
+        public CaptureInputField(Position pos, Dimensions dim, Actions.ButtonAction action, int? maxLength = null) 
+            : base(pos, dim)
+        {
+            this.FieldPos = pos;
+            this.FieldDim = dim;
+            this.ButtonAction = action;
+            this.MaxLength = maxLength;
+
+            CaptureInput();
+
+        }
 
         public void CaptureInput()
         {
+            if (!isFocused) return;
+
             Console.SetCursorPosition(FieldPos.Left, FieldPos.Top);
             Console.CursorVisible = true;
             ConsoleKeyInfo keyInfo;
@@ -49,6 +62,21 @@ namespace Screen_Manager_SOP_2
         public void ClearInput()
         {
             buffer.Clear();
+        }
+
+        public void Focus()
+        {
+            isFocused = true;
+        }
+
+        public void Defocus()
+        {
+            isFocused = false;
+        }
+
+        public void HandleKeyPress(ConsoleKeyInfo keyInfo)
+        {
+            ButtonAction?.Invoke();
         }
     }
 }

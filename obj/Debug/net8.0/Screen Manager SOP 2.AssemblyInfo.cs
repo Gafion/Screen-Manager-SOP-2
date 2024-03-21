@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Screen Manager SOP 2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20bf16512bae5c086cebb6bddff8a39742c11679")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ff4753863f1ab78589ec22805ac34b3891c8728")]
 [assembly: System.Reflection.AssemblyProductAttribute("Screen Manager SOP 2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Screen Manager SOP 2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

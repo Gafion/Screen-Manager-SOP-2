@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Screen_Manager_SOP_2
+﻿namespace Screen_Manager_SOP_2
 {
     internal class LabelFieldGroup : DrawableObject
     {
@@ -13,7 +7,7 @@ namespace Screen_Manager_SOP_2
         private int VerticalSpacing {  get; }
         private int InputFields {  get; }
         private int ComboBoxes { get; }
-        private Position NextStartPos { get; set; }
+        private Position? NextStartPos { get; set; }
 
         public LabelFieldGroup(Position pos, Dimensions dim, int spacing, int inputFields, int comboBoxes, List<string>? labels = null) : base(pos, dim)
         {
@@ -108,9 +102,6 @@ namespace Screen_Manager_SOP_2
                 NextStartPos = currentPos;
             }
         }
-        public Position GetNextStartPosition()
-        {
-            return NextStartPos;
-        }
+        public Position GetNextStartPosition() => NextStartPos!;
     }
 }
