@@ -7,8 +7,8 @@
 
         public FocusManager (IEnumerable<IFocusable> focusables)
         {
-            this.focusables!.AddRange(focusables);
             InitializeFocus();
+            this.focusables!.AddRange(focusables);
         }
 
         private void InitializeFocus()
